@@ -12,7 +12,7 @@ function PaginationCSR() {
 		if (router.isReady) {
 			if (router.query.page) {
 				router.push(
-					`/paginationCSR?page=${parseInt(router.query.page)}`,
+					`/paginationCSR2?page=${parseInt(router.query.page)}`,
 					undefined,
 					{
 						shallow: true
@@ -43,7 +43,7 @@ function PaginationCSR() {
 					disabled={page === 1}
 					onClick={() => {
 						setPage(page - 1);
-						router.push(`/paginationCSR?page=${page - 1}`, undefined, {
+						router.push(`/paginationCSR2?page=${page - 1}`, undefined, {
 							shallow: true
 						});
 					}}
@@ -56,7 +56,7 @@ function PaginationCSR() {
 					disabled={!data?.info?.next || isPreviousData}
 					onClick={() => {
 						setPage(page + 1);
-						router.push(`/paginationCSR?page=${page + 1}`, undefined, {
+						router.push(`/paginationCSR2?page=${page + 1}`, undefined, {
 							shallow: true
 						});
 					}}
