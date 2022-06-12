@@ -18,7 +18,10 @@ export default function Home() {
 				</h1>
 				<br />
 				<h2>Pagination CSR</h2>
-				<Link href="/paginationCSR">Pagination CSR</Link>
+				<Link href={`/paginationCSR?page=${1}`}>Pagination CSR</Link>
+				<br />
+				<h2>Pagination CSR 2</h2>
+				<Link href={`/paginationCSR2`}>Pagination CSR</Link>
 			</main>
 		</div>
 	);

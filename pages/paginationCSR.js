@@ -7,27 +7,29 @@ function PaginationCSR() {
 	const router = useRouter();
 
 	const [page, setPage] = useState(parseInt(router.query.page) || 1);
+	console.log(router.query.page);
+	// useEffect(() => {
+	// 	if (router.isReady) {
+	// 		if (router.query.page) {
+	// 			router.push(
+	// 				`/paginationCSR?page=${parseInt(router.query.page)}`,
+	// 				undefined,
+	// 				{
+	// 					shallow: true
+	// 				}
+	// 			) && setPage(parseInt(router.query.page));
+	// 			console.log(Number(router.query.page));
+	// 		}
 
-	useEffect(() => {
-		if (router.isReady) {
-			if (router.query.page) {
-				router.push(
-					`/paginationCSR?page=${parseInt(router.query.page)}`,
-					undefined,
-					{
-						shallow: true
-					}
-				) && setPage(parseInt(router.query.page));
-				console.log(Number(router.query.page));
-			}
+	// 		// router.query.page &&
+	// 	}
 
-			// router.query.page &&
-		}
+	// 	console.log(`rerender`);
+	// }, [router.isReady]);
 
-		console.log(`rerender`);
-	}, [router.isReady]);
-
-	const { data, isPreviousData, isLoading, error } = useFetchCharacters(page);
+	const { data, isPreviousData, isLoading, error } = useFetchCharacters(
+		router.query.page
+	);
 
 	// console.log(data);
 
@@ -40,12 +42,16 @@ function PaginationCSR() {
 			<h1>Pagination CSR</h1>
 			<>
 				<button
-					disabled={page === 1}
+					disabled={Number(router.query.page) === 1}
 					onClick={() => {
 						setPage(page - 1);
-						router.push(`/paginationCSR?page=${page - 1}`, undefined, {
-							shallow: true
-						});
+						router.push(
+							`/paginationCSR?page=${Number(router.query.page) - 1}`,
+							undefined,
+							{
+								shallow: true
+							}
+						);
 					}}
 				>
 					Previous
@@ -56,9 +62,13 @@ function PaginationCSR() {
 					disabled={!data?.info?.next || isPreviousData}
 					onClick={() => {
 						setPage(page + 1);
-						router.push(`/paginationCSR?page=${page + 1}`, undefined, {
-							shallow: true
-						});
+						router.push(
+							`/paginationCSR?page=${Number(router.query.page) + 1}`,
+							undefined,
+							{
+								shallow: true
+							}
+						);
 					}}
 				>
 					Next
@@ -66,26 +76,27 @@ function PaginationCSR() {
 			</>
 			<>
 				<div className="grid-container">
-					{data?.results?.map((character) => (
-						<article key={character.id}>
-							<Image
-								src={character.image}
-								alt={character.name}
-								height={250}
-								loading="eager"
-								width={300}
-								priority
-							/>
+					{router.query.page &&
+						data?.results?.map((character) => (
+							<article key={character.id}>
+								<Image
+									src={character.image}
+									alt={character.name}
+									height={250}
+									loading="eager"
+									width={300}
+									priority
+								/>
 
-							<div className="text">
-								<p>Name: {character.name}</p>
-								<p>Lives in: {character.location.name}</p>
-								<p>Species: {character.species}</p>
-								<i>Id: {character.id} </i>
-								<p>Status: {character.status}</p>
-							</div>
-						</article>
-					))}
+								<div className="text">
+									<p>Name: {character.name}</p>
+									<p>Lives in: {character.location.name}</p>
+									<p>Species: {character.species}</p>
+									<i>Id: {character.id} </i>
+									<p>Status: {character.status}</p>
+								</div>
+							</article>
+						))}
 				</div>
 			</>
 		</div>
